@@ -184,7 +184,11 @@ class Scheduler:
 
 			try:
 				hours_str, minutes_str = start_time.split(":")
-				start_minutes = int(hours_str) * 60 + int(minutes_str)
+				hours = int(hours_str)
+				minutes = int(minutes_str)
+				if not (0 <= hours < 24 and 0 <= minutes < 60):
+					raise ValueError
+				start_minutes = hours * 60 + minutes
 				end_minutes = start_minutes + task.duration_minutes
 				intervals.append((start_minutes, end_minutes, task))
 			except (ValueError, IndexError):
