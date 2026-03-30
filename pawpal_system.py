@@ -26,6 +26,7 @@ class Task:
 	frequency: str = "once"
 	due_date: date = field(default_factory=date.today)
 	is_done: bool = False
+	start_time: str | None = None  # Optional HH:MM format for conflict detection
 
 	def __post_init__(self):
 		valid_frequencies = {"once", "daily", "weekly"}
@@ -49,6 +50,7 @@ class Task:
 			priority=self.priority,
 			frequency=self.frequency,
 			due_date=next_due_date,
+			start_time=self.start_time,
 		)
 
 
