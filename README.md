@@ -22,6 +22,17 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling Features
+
+The PawPal+ scheduler now includes advanced planning capabilities:
+
+- **Recurring Tasks:** Set tasks as daily or weekly; they automatically regenerate after completion with the next due date.
+- **Due-Date Awareness:** Assign due dates to tasks using Python's datetime module for fine-grained scheduling.
+- **Task Filtering:** Query pending/completed tasks or filter by pet name for multi-pet households.
+- **Duration Sorting:** View tasks ordered from quickest to slowest for flexible planning.
+- **Conflict Detection:** Safely detect overlapping time slots across scheduled tasks; warnings appear instead of crashes for incomplete data.
+- **Greedy Optimization:** Prioritizes high-importance tasks first, then fills remaining time with lower-priority tasks to maximize care quality.
+
 ## Getting started
 
 ### Setup

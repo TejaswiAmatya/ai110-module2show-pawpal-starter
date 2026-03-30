@@ -39,12 +39,28 @@ Scheduler "1" --> "0.._" Task : manages
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+  - **Time:** Total available_minutes per day (90 min in the demo)
+  - **Priority:** Tasks are ranked by priority (1-3), then by duration (shorter-first tie-break)
+  - **Completion status:** Only pending (not done) tasks are included in plans
+  - **Recurrence:** Daily/weekly tasks auto-create next instances when marked done
+  - Most important: Priority and total time budget drive all scheduling decisions
+
 - How did you decide which constraints mattered most?
+  Pet owners care most about fitting high-priority care (meds, feeding, walks) into their limited daily time. Time priority > task recurrence > exact scheduling.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+  **Tradeoff: Time-budget optimization vs. time-conflict avoidance.**
+  - `generate_plan()` optimizes for total time spent (picks tasks that fit within available_minutes) but does NOT enforce specific start-times or detect schedule conflicts.
+  - Conflict detection (`detect_conflicts()`) is a *separate* check that returns warnings, not something that blocks plan generation.
+  - Example: Two tasks totaling 90 minutes fit the budget and are selected, but if they have overlapping start_times (09:00-09:30 and 09:15-09:35), the scheduler still returns both; the user must call `detect_conflicts()` to learn about the overlap.
+
 - Why is that tradeoff reasonable for this scenario?
+  1. **Pet owners rarely plan with exact times.** They think "I have 90 minutes today for Mochi" not "walk at 09:00, breakfast at 09:30." Rough time budgets are more practical.
+  2. **Keeps the algorithm simple and fast.** O(n log n) priority sort + greedy greedy selection beats trying to solve the NP-hard bin-packing + interval-scheduling problem.
+  3. **Conflict detection is optional but available.** Users who *do* schedule by time can run `detect_conflicts()` to validate, then adjust tasks manually.
+  4. **Separation of concerns.** Planning (how much time) and conflict-checking (when in the day) are two concerns; keeping them separate makes the system easier to extend later.
 
 ---
 
