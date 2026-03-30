@@ -5,12 +5,32 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+  In the initial UML design, I have 4 core classes:
+
+1. Owner: This includes pet owner's name and available time for pet care
+2. Pet: This includes name, species, age, and notes
+3. Tasks: This includes name, category (e.g. walk, feed, meds), duration_minutes, priority, and a is_done flag, plus a mark_done() method to track completion.
+4. Scheduler: This holds a reference to one Owner, one Pet, and a list<Task>. It exposes three methods: add_task(), remove_task(), and generate_plan(), which produces the daily schedule.
+
+This is how they are related to one other
+Owner "1" --> "1.._" Pet : owns
+Scheduler "1" --> "1" Owner : belongs to
+Scheduler "1" --> "1" Pet : cares for
+Scheduler "1" --> "0.._" Task : manages
+
 - What classes did you include, and what responsibilities did you assign to each?
+
+1. Owner: This includes pet owner's name and available time for pet care
+2. Pet: This includes name, species, age, and notes
+3. Tasks: This includes name, category (e.g. walk, feed, meds), duration_minutes, priority, and a is_done flag, plus a mark_done() method to track completion.
+4. Scheduler: This holds a reference to one Owner, one Pet, and a list<Task>. It exposes three methods: add_task(), remove_task(), and generate_plan(), which produces the daily schedule.
 
 **b. Design changes**
 
 - Did your design change during implementation?
+  yes
 - If yes, describe at least one change and why you made it.
+  The skeleton model represented only had a 1 to 1 relation between pet and owner. This meant one owner could only have one pet. This was changed by adding a list for owner.
 
 ---
 
